@@ -7,6 +7,7 @@
  */
 
 // 实现
+// 没有问号
 type MyReadonly<T> = {
   readonly [p in keyof T]: T[p]
 }
