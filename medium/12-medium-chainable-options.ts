@@ -13,7 +13,9 @@
  */
 
 type Chainable<T = {}> = {
-  option<K extends string, V = unknown>(key: K, value: V): Chainable<T & Record<K, V>>
+  // option<K extends string, V = unknown>(key: K, value: V): Chainable<T & Record<K, V>>
+  // 或者自己实现Record
+  option<K extends string, V = unknown>(key: K, value: V): Chainable<T & { [P in K]: V}>
   get(): T
 }
 
