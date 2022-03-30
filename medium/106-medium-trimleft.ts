@@ -8,7 +8,9 @@ type Space = ' ' | '\t' | '\n'
 type TrimLeft<S extends string> = S extends `${Space}${infer W}` ? TrimLeft<W> : S
 
 // 扩展
+// 4803题
 type TrimRight<S extends string> = S extends `${infer W}${Space}` ? TrimRight<W> : S
+// 108
 type Trim<S extends string> = TrimLeft<TrimRight<S>>
 
 // 验证
