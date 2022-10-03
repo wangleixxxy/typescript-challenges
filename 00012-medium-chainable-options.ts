@@ -45,15 +45,41 @@ type Expected3 = {
 //   get(): any;
 // };
 
-type Chainable<T = {}> = {
+type Chainable0<T = {}> = {
   // 或者自己实现Record
   // option<K extends string, V = unknown>(
   //   key: K,
   //   value: V
   // ): Chainable<T & { [P in K]: V }>;
-  option<K extends string, V = unknown>(
-    key: string,
-    value: any
-  ): Chainable<T & Record<K, V>>;
+
+  /**
+   * 用例3无法通过
+   */
+  // option<K extends string, V = unknown>(
+  //   key: K,
+  //   value: V
+  // ): Chainable<T & Record<K, V>>;
+  option<K extends string, V>(
+    key: K,
+    value: V
+  ): Chainable<(K extends keyof T ? Omit<T, K> : T) & Record<K, V>>;
   get(): T;
+};
+
+/**
+ * 抄答案
+ */
+
+type GetKeyType<T, K extends string, V> = K extends keyof T
+  ? T[K] extends V
+    ? number // 只要不是 string 类型即可
+    : K
+  : K;
+
+type Chainable<R = {}> = {
+  option<K extends string, V>(
+    key: GetKeyType<R, K, V>,
+    value: V
+  ): Chainable<Omit<R, K> & { [P in K]: V }>;
+  get(): R;
 };
