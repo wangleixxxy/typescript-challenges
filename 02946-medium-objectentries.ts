@@ -28,10 +28,19 @@ type cases = [
 //   [P in keyof T]: [P, T[P]];
 // }[keyof T];
 
+/**
+ * 判断值为undefined的写法
+ */
+// type EntriesObj1<T extends Record<any, any>> = {
+//   [K in keyof T]-?: [
+//     K,
+//     T[K] extends [undefined] ? undefined : Exclude<T[K], undefined>
+//   ];
+// };
 type EntriesObj<T extends Record<any, any>> = {
   [K in keyof T]-?: [
     K,
-    T[K] extends [undefined] ? undefined : Exclude<T[K], undefined>
+    T[K] extends undefined ? undefined : Exclude<T[K], undefined>
   ];
 };
 type ObjectEntries<T extends Record<any, any>> = EntriesObj<T>[keyof T];
